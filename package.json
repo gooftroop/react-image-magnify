@@ -141,7 +141,7 @@
     "@react-hook/resize-observer": "^1.2.5",
     "detect-it": "4.0.1",
     "react": "^16.8 || ^17.0.0 || ^18.0",
-    "react-dom": "^16.8 || ^17.0.0 ^18.0",
+    "react-dom": "^16.8 || ^17.0.0 || ^18.0",
     "react-popper": "^2.2.5"
   }
 }
