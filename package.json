@@ -1,6 +1,6 @@
 {
   "name": "@blacklab/react-image-magnify",
-  "version": "4.0.0",
+  "version": "4.1.0-alpha.1",
   "description": "A responsive react image zoom component",
   "repository": {
     "type": "git",
