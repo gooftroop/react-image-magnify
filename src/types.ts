@@ -117,6 +117,11 @@ export type ChildProps = {
     position: Point;
 };
 
+export interface DisplayUntilActiveProps {
+    children: JSX.Element;
+    isActive: boolean;
+    shouldHideHintAfterFirstActivation?: boolean;
+}
 export interface CursorPositionProps extends HTMLProps<HTMLDivElement> {
     activationInteractionMouse: Interactions['click'] | Interactions['hover'];
     activationInteractionTouch: Interactions['press'] | Interactions['tap'] | Interactions['touch'];

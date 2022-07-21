@@ -46,6 +46,26 @@ MagnifyOnHoverWithHint.args = {
     },
 };
 
+export const MagnifyOnHoverWithHintThatDeactivates = Template.bind({});
+MagnifyOnHoverWithHintThatDeactivates.args = {
+    activationInteractionHint: 'hover',
+    shouldHideHintAfterFirstActivation: true,
+    imageProps: {
+        alt: 'example small image',
+        src: 'https://picsum.photos/id/1018/200',
+        height: 200,
+        width: 200,
+    },
+    magnifiedImageProps: {
+        src: 'https://picsum.photos/id/1018/800',
+        height: 600,
+        width: 600,
+    },
+    portalProps: {
+        horizontalOffset: 10,
+    },
+};
+
 export const MagnifyOnHintClick = Template.bind({});
 MagnifyOnHintClick.args = {
     activationInteractionHint: 'click',

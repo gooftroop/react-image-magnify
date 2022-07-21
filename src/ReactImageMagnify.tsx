@@ -14,6 +14,7 @@ import { MagnifyContainerPortal } from 'src/MagnifyContainerPortal';
 import { NegativeSpaceLens } from 'src/lens/negative-space';
 import { PositiveSpaceLens } from 'src/lens/positive-space';
 import { DefaultHint } from 'src/hint/DefaultHint';
+import { DisplayUntilActive } from 'src/hint/DisplayUntilActive';
 import { getLensCursorOffset } from 'src/lib/lens';
 import { getEnlargedImageContainerDimension } from 'src/lib/dimensions';
 import { CursorPosition } from 'src/CursorPosition';
@@ -63,6 +64,7 @@ export const ReactImageMagnify = (props: ReactImageMagnifyProps): JSX.Element =>
         portalProps: portalPropsProp,
         shouldUsePositiveSpaceLens = false,
         style,
+        shouldHideHintAfterFirstActivation,
         ...rest
     } = props;
     const { onLoad, ...usabledImageProps } = imageProps;
@@ -219,20 +221,6 @@ export const ReactImageMagnify = (props: ReactImageMagnifyProps): JSX.Element =>
         }
     };
 
-    const HintComponentOrNull = activationInteractionHint && shouldShowHint(activationInteractionHint)
-        ? (
-            <HintComponent
-                {...hintProps}
-                hintTextMouse={hintProps?.hintTextMouse || `${capitalize(activationInteractionHint)} to Zoom`}
-                hintTextTouch={hintProps?.hintTextTouch || 'Long-Touch to Zoom'}
-                isMouseDetected={isMouseDetected}
-                isTouchDetected={isTouchDetected}
-                style={generateHintStyle(hintProps?.style)}
-                onClick={lockedByHintInteraction ? handleHintClick : undefined}
-                onTouchEnd={lockedByHintInteraction ? handleHintTouchEnd : undefined}
-            />
-        ) : null;
-
     const LensComponent = LensComponentProp || shouldUsePositiveSpaceLens ? PositiveSpaceLens : NegativeSpaceLens;
 
     ///
@@ -252,7 +240,6 @@ export const ReactImageMagnify = (props: ReactImageMagnifyProps): JSX.Element =>
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
     return (
         <CursorPosition
             shouldStopTouchMovePropagation
@@ -274,7 +261,25 @@ export const ReactImageMagnify = (props: ReactImageMagnifyProps): JSX.Element =>
                     />
                     {imageLoaded && (
                         <>
-                            {HintComponentOrNull}
+                            {activationInteractionHint && shouldShowHint(activationInteractionHint)
+                                ? (
+                                    <DisplayUntilActive {...{
+                                        isActive,
+                                        shouldHideHintAfterFirstActivation,
+                                    }}
+                                    >
+                                        <HintComponent
+                                            {...hintProps}
+                                            hintTextMouse={hintProps?.hintTextMouse || `${capitalize(activationInteractionHint)} to Zoom`}
+                                            hintTextTouch={hintProps?.hintTextTouch || 'Long-Touch to Zoom'}
+                                            isMouseDetected={isMouseDetected}
+                                            isTouchDetected={isTouchDetected}
+                                            style={generateHintStyle(hintProps?.style)}
+                                            onClick={lockedByHintInteraction ? handleHintClick : undefined}
+                                            onTouchEnd={lockedByHintInteraction ? handleHintTouchEnd : undefined}
+                                        />
+                                    </DisplayUntilActive>
+                                ) : null}
                             {shouldShowLens && !lockedByHintInteraction && (
                                 <LensComponent
                                     cursorOffset={cursorOffset}
